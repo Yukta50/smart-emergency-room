@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERFlow - Smart Emergency Room System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="login-overlay" id="login-overlay">
+      <div class="auth-layout">
+        <section class="auth-aside">
+          <div class="auth-brand">
+            <div class="brand-mark">ER</div>
+            <div>
+              <span class="brand-title">ERFlow</span>
+              <small>Emergency Room</small>
+            </div>
+          </div>
+          <div class="auth-aside-copy">
+            <p class="eyebrow">Emergency Operations Center</p>
+            <h1>Better coordination.<br />More focused care.</h1>
+            <p>One clear view of patient flow, triage priorities, and the teams ready to help.</p>
+          </div>
+          <div class="auth-status">
+            <span class="status-dot live"></span>
+            <span><strong>Operations overview</strong><small>Patient flow, at a glance</small></span>
+          </div>
+        </section>
+
+        <section class="auth-panel">
+          <div class="auth-screen active" data-auth-screen="login">
+            <div class="login-header">
+              <div class="brand-mark small">ER</div>
+              <div>
+                <p class="eyebrow">Welcome back</p>
+                <h2>Sign in to ERFlow</h2>
+              </div>
+            </div>
+            <p class="auth-intro">Use your staff account to open the operations dashboard.</p>
+            <form id="login-form" class="auth-form">
+              <label for="login-user">
+                Username
+                <input id="login-user" name="username" type="text" value="admin" autocomplete="username" required />
+              </label>
+              <label for="login-pass">
+                Password
+                <input id="login-pass" name="password" type="password" autocomplete="current-password" required />
+              </label>
+              <p class="auth-hint">Demo access: <strong>admin / admin123</strong></p>
+              <button id="login-btn" type="submit" class="primary-btn wide-btn">Enter Dashboard</button>
+              <p id="login-message" class="auth-message" aria-live="polite"></p>
+            </form>
+            <p class="auth-switch">New to ERFlow? <button type="button" class="text-btn" data-auth-target="register">Create an account</button></p>
+          </div>
+
+          <div class="auth-screen" data-auth-screen="register">
+            <div class="login-header">
+              <div class="brand-mark small">ER</div>
+              <div>
+                <p class="eyebrow">Get started</p>
+                <h2>Create your account</h2>
+              </div>
+            </div>
+            <p class="auth-intro">Set up a staff profile to access the ERFlow dashboard.</p>
+            <form id="register-account-form" class="auth-form">
+              <label for="account-name">
+                Full name
+                <input id="account-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+              </label>
+              <label for="account-username">
+                Username
+                <input id="account-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9._-]{3,30}" title="Use 3-30 letters, numbers, dots, underscores, or hyphens." placeholder="Choose a username" required />
+              </label>
+              <label for="account-password">
+                Password
+                <input id="account-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required />
+              </label>
+              <label for="account-confirm-password">
+                Confirm password
+                <input id="account-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Enter your password again" required />
+              </label>
+              <p class="auth-hint">Staff accounts are stored securely in the hospital database.</p>
+              <button type="submit" class="primary-btn wide-btn">Create account</button>
+              <p id="register-account-message" class="auth-message" aria-live="polite"></p>
+            </form>
+            <p class="auth-switch">Already have an account? <button type="button" class="text-btn" data-auth-target="login">Sign in</button></p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <div class="dashboard-layout">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-mark">ER</div>
+            <div>
+              <span class="brand-title">ERFlow</span>
+              <small>Emergency Room</small>
+            </div>
+          </div>
+
+          <nav class="sidebar-nav">
+            <button class="nav-item active" data-view="overview"><span>📊</span> Overview</button>
+            <button class="nav-item" data-view="registry"><span>📝</span> Registry</button>
+            <button class="nav-item" data-view="triage"><span>🚑</span> Triage</button>
+            <button class="nav-item" data-view="route"><span>🧭</span> Route</button>
+            <button class="nav-item" data-view="beds"><span>🛏️</span> Beds</button>
+            <button class="nav-item" data-view="records"><span>📋</span> Records</button>
+            <button class="nav-item" data-view="structures"><span>🧠</span> Structures</button>
+            <button class="nav-item" data-view="algorithms"><span>⚙️</span> Algorithms</button>
+          </nav>
+        </aside>
+
+        <main class="main-panel">
+          <header class="topbar" id="overview">
+            <div>
+              <p class="eyebrow">Signed in as <span id="staff-name">Staff</span></p>
+              <h1>Smart ER Dashboard</h1>
+            </div>
+            <div class="topbar-actions">
+              <button id="theme-toggle" class="secondary-btn">🌙 Theme</button>
+              <button id="undo-btn" class="secondary-btn">Undo Last Action</button>
+              <button id="logout-btn" class="secondary-btn">Log out</button>
+            </div>
+          </header>
+
+          <section class="view-panel active" data-panel="overview">
+            <div class="stats-grid">
+              <div class="stat-card primary">
+                <span>Total Patients</span>
+                <strong id="total-patients">0</strong>
+              </div>
+              <div class="stat-card blue">
+                <span>Waiting</span>
+                <strong id="total-waiting">0</strong>
+              </div>
+              <div class="stat-card green">
+                <span>Priority Queue</span>
+                <strong id="total-priority">0</strong>
+              </div>
+              <div class="stat-card amber">
+                <span>Available Beds</span>
+                <strong id="total-beds">0</strong>
+              </div>
+            </div>
+
+            <div class="two-panel-grid">
+              <section class="card">
+                <h2>Current Waiting Queue</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Severity</th>
+                      <th>Unit</th>
+                    </tr>
+                  </thead>
+                  <tbody id="queue-table"></tbody>
+                </table>
+              </section>
+
+              <section class="card">
+                <h2>Priority List</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Severity</th>
+                      <th>Arrival</th>
+                    </tr>
+                  </thead>
+                  <tbody id="priority-table"></tbody>
+                </table>
+              </section>
+            </div>
+
+            <div class="info-grid">
+              <div class="card status-panel">
+                <h2>Operational Status</h2>
+                <div class="status-row">
+                  <span class="status-dot live"></span>
+                  Triage system active
+                </div>
+                <div class="status-row">
+                  <span class="status-dot ok"></span>
+                  Bed allocation ready
+                </div>
+                <div class="status-row">
+                  <span class="status-dot warn"></span>
+                  Review route requests for ICU
+                </div>
+              </div>
+
+              <div class="card patient-spotlight">
+                <h2>Patient Spotlight</h2>
+                <div class="spotlight-box">
+                  <strong id="spotlight-name">Asha</strong>
+                  <span id="spotlight-detail">ER-101 • Critical • ICU</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="registry">
+            <div class="card">
+              <h2>Register New Patient</h2>
+              <form id="register-form" class="stack-form">
+                <div class="two-col">
+                  <label>
+                    Patient ID
+                    <input name="id" placeholder="ER-106" required />
+                  </label>
+                  <label>
+                    Name
+                    <input name="name" placeholder="Patient name" required />
+                  </label>
+                </div>
+                <div class="two-col">
+                  <label>
+                    Age
+                    <input name="age" type="number" min="1" max="120" required />
+                  </label>
+                  <label>
+                    Gender
+                    <select name="gender">
+                      <option value="Unknown">Unknown</option>
+                      <option value="F">Female</option>
+                      <option value="M">Male</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </label>
+                </div>
+                <label>
+                  Symptoms
+                  <input name="symptoms" placeholder="Symptoms" />
+                </label>
+                <div class="two-col">
+                  <label>
+                    Severity (1-10)
+                    <input name="severity" type="number" min="1" max="10" required />
+                  </label>
+                  <label>
+                    Required Unit
+                    <select name="requiredUnit">
+                      <option value="Emergency">Emergency</option>
+                      <option value="ICU">ICU</option>
+                      <option value="Observation">Observation</option>
+                      <option value="Ward">Ward</option>
+                    </select>
+                  </label>
+                </div>
+                <button type="submit" class="primary-btn">Register Patient</button>
+              </form>
+              <p id="register-message" class="message-box"></p>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="triage">
+            <div class="card">
+              <h2>Next Patient Recommendation</h2>
+              <div id="recommendation-box" class="recommendation-box">Loading...</div>
+              <button id="triage-btn" class="primary-btn">Treat Next Patient</button>
+              <p id="triage-message" class="message-box"></p>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="route">
+            <div class="card">
+              <h2>Route Finder</h2>
+              <div class="route-form">
+                <label>
+                  From
+                  <select id="from-unit">
+                    <option value="Reception">Reception</option>
+                    <option value="Triage">Triage</option>
+                    <option value="Emergency">Emergency</option>
+                    <option value="ICU">ICU</option>
+                    <option value="Lab">Lab</option>
+                    <option value="Ward">Ward</option>
+                    <option value="Observation">Observation</option>
+                    <option value="Discharge">Discharge</option>
+                  </select>
+                </label>
+                <label>
+                  To
+                  <select id="to-unit">
+                    <option value="ICU">ICU</option>
+                    <option value="Ward">Ward</option>
+                    <option value="Lab">Lab</option>
+                    <option value="Discharge">Discharge</option>
+                    <option value="Emergency">Emergency</option>
+                    <option value="Observation">Observation</option>
+                    <option value="Triage">Triage</option>
+                    <option value="Reception">Reception</option>
+                  </select>
+                </label>
+                <button id="route-btn" class="primary-btn">Find Route</button>
+              </div>
+              <p id="route-output" class="route-output"></p>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="beds">
+            <div class="card">
+              <h2>Bed Availability</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Unit</th>
+                    <th>Available Beds</th>
+                  </tr>
+                </thead>
+                <tbody id="bed-table"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="records">
+            <div class="card">
+              <h2>Patient Record Search</h2>
+              <div class="search-tools">
+                <label for="search-mode">
+                  Search algorithm
+                  <select id="search-mode">
+                    <option value="linear">Linear (ID or name)</option>
+                    <option value="binary">Binary (exact patient ID)</option>
+                    <option value="bst">Binary search tree (exact ID)</option>
+                  </select>
+                </label>
+                <label for="search-box">
+                  Patient ID or name
+                  <input id="search-box" type="search" placeholder="Search patient records" />
+                </label>
+                <a id="export-csv" class="secondary-btn" href="/api/patients/export.csv">Export CSV for R</a>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Severity</th>
+                    <th>Unit</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="patient-table"></tbody>
+              </table>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+              <h2>Update / Delete Patient</h2>
+              <form id="update-form" class="stack-form">
+                <label>
+                  Patient ID
+                  <input id="update-id" placeholder="ER-101" required />
+                </label>
+                <div class="two-col">
+                  <label>
+                    Severity
+                    <input id="update-severity" type="number" min="1" max="10" />
+                  </label>
+                  <label>
+                    Treatment Status
+                    <select id="update-status">
+                      <option value="">Select status</option>
+                      <option value="Queued">Queued</option>
+                      <option value="Under Treatment">Under Treatment</option>
+                      <option value="Transferred">Transferred</option>
+                      <option value="Discharged">Discharged</option>
+                    </select>
+                  </label>
+                </div>
+                <label>
+                  Required Unit
+                  <select id="update-unit">
+                    <option value="">Select unit</option>
+                    <option value="Emergency">Emergency</option>
+                    <option value="ICU">ICU</option>
+                    <option value="Observation">Observation</option>
+                    <option value="Ward">Ward</option>
+                  </select>
+                </label>
+                <div class="button-row">
+                  <button type="submit" class="primary-btn">Update Record</button>
+                  <button type="button" id="delete-btn" class="danger-btn">Delete Record</button>
+                </div>
+              </form>
+              <p id="update-message" class="message-box"></p>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="structures">
+            <div class="card">
+              <h2>Data Structure Map</h2>
+              <div id="structure-summary" class="info-cards"></div>
+            </div>
+          </section>
+
+          <section class="view-panel" data-panel="algorithms">
+            <div class="card">
+              <h2>Algorithm Logic in Action</h2>
+              <section class="algorithm-tool">
+                <h3>Stack-based expression evaluator</h3>
+                <p>Evaluate basic arithmetic with parentheses using a linked-list stack.</p>
+                <form id="expression-form" class="route-form">
+                  <label for="expression-input">
+                    Arithmetic expression
+                    <input id="expression-input" name="expression" type="text" maxlength="200" placeholder="(8 + 4) / 3" required />
+                  </label>
+                  <button type="submit" class="primary-btn">Evaluate</button>
+                </form>
+                <p id="expression-output" class="message-box" aria-live="polite"></p>
+              </section>
+              <div id="algorithm-summary" class="info-cards"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

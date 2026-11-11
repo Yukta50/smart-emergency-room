@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in - ERFlow</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="login-overlay">
+      <div class="auth-layout">
+        <section class="auth-aside">
+          <div class="auth-brand">
+            <div class="brand-mark">ER</div>
+            <div>
+              <span class="brand-title">ERFlow</span>
+              <small>Emergency Room</small>
+            </div>
+          </div>
+          <div class="auth-aside-copy">
+            <p class="eyebrow">Emergency Operations Center</p>
+            <h1>Better coordination.<br />More focused care.</h1>
+            <p>One clear view of patient flow, triage priorities, and the teams ready to help.</p>
+          </div>
+          <div class="auth-status">
+            <span class="status-dot live"></span>
+            <span><strong>Operations overview</strong><small>Patient flow, at a glance</small></span>
+          </div>
+        </section>
+
+        <section class="auth-panel">
+          <div class="login-header">
+            <div class="brand-mark small">ER</div>
+            <div>
+              <p class="eyebrow">Welcome back</p>
+              <h2>Sign in to ERFlow</h2>
+            </div>
+          </div>
+          <p class="auth-intro">Use your staff account to open the operations dashboard.</p>
+          <form id="login-form" class="auth-form">
+            <label for="login-user">
+              Username
+              <input id="login-user" name="username" type="text" autocomplete="username" required />
+            </label>
+            <label for="login-pass">
+              Password
+              <input id="login-pass" name="password" type="password" autocomplete="current-password" required />
+            </label>
+            <p class="auth-hint">Demo access: <strong>admin / admin123</strong></p>
+            <button type="submit" class="primary-btn wide-btn">Enter Dashboard</button>
+            <p id="login-message" class="auth-message" aria-live="polite"></p>
+          </form>
+          <p class="auth-switch">New to ERFlow? <a class="text-btn" href="register.html">Create an account</a></p>
+        </section>
+      </div>
+    </main>
+    <script src="auth.js"></script>
+  </body>
+</html>

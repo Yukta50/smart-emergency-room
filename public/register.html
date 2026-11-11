@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create account - ERFlow</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="login-overlay">
+      <div class="auth-layout">
+        <section class="auth-aside">
+          <div class="auth-brand">
+            <div class="brand-mark">ER</div>
+            <div>
+              <span class="brand-title">ERFlow</span>
+              <small>Emergency Room</small>
+            </div>
+          </div>
+          <div class="auth-aside-copy">
+            <p class="eyebrow">Emergency Operations Center</p>
+            <h1>One team.<br />One connected view.</h1>
+            <p>Join your operations workspace and keep patient flow and care teams in sync.</p>
+          </div>
+          <div class="auth-status">
+            <span class="status-dot live"></span>
+            <span><strong>Operations overview</strong><small>Patient flow, at a glance</small></span>
+          </div>
+        </section>
+
+        <section class="auth-panel">
+          <div class="login-header">
+            <div class="brand-mark small">ER</div>
+            <div>
+              <p class="eyebrow">Get started</p>
+              <h2>Create your account</h2>
+            </div>
+          </div>
+          <p class="auth-intro">Set up a staff profile to access the ERFlow dashboard.</p>
+          <form id="register-account-form" class="auth-form">
+            <label for="account-name">
+              Full name
+              <input id="account-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+            </label>
+            <label for="account-username">
+              Username
+              <input id="account-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9._-]{3,30}" title="Use 3-30 letters, numbers, dots, underscores, or hyphens." placeholder="Choose a username" required />
+            </label>
+            <label for="account-password">
+              Password
+              <input id="account-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required />
+            </label>
+            <label for="account-confirm-password">
+              Confirm password
+              <input id="account-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Enter your password again" required />
+            </label>
+            <p class="auth-hint">Staff accounts are stored securely in the hospital database.</p>
+            <button type="submit" class="primary-btn wide-btn">Create account</button>
+            <p id="register-account-message" class="auth-message" aria-live="polite"></p>
+          </form>
+          <p class="auth-switch">Already have an account? <a class="text-btn" href="login.html">Sign in</a></p>
+        </section>
+      </div>
+    </main>
+    <script src="auth.js"></script>
+  </body>
+</html>

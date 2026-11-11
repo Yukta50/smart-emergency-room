@@ -1,0 +1,23 @@
+{
+  "name": "erflow-smart-emergency-room-system",
+  "version": "1.0.0",
+  "description": "ERFlow: smart emergency room patient management prototype built with Node.js and Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "emergency-room",
+    "data-structures",
+    "full-stack",
+    "express"
+  ],
+  "author": "Yukta Adhikari",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "express": "^4.19.2",
+    "mysql2": "^3.24.6"
+  }
+}

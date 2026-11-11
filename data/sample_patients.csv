@@ -1,0 +1,6 @@
+"id","name","age","gender","symptoms","severity","arrivalTime","requiredUnit","treatmentStatus","bedStatus","triageCategory","assignedBed"
+"ER-101","Asha",29,"F","Chest pain",9,"09:10","ICU","Queued","Waiting","Critical","None"
+"ER-102","Manoj",52,"M","Breathing difficulty",7,"09:15","Emergency","Queued","Waiting","High","None"
+"ER-103","Zara",15,"F","Fever",4,"09:20","Observation","Queued","Waiting","Medium","None"
+"ER-104","Kiran",63,"M","Severe bleeding",8,"09:25","Ward","Queued","Waiting","High","None"
+"ER-105","Tina",41,"F","Fracture",5,"09:30","Ward","Queued","Waiting","High","None"
